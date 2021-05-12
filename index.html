@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/Limites_Bairros_2015_2.js"></script>
+        <script src="data/Pontos_IA_3.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-5.264307295157081,-37.41138429063828],[-5.111587795738438,-37.23907561508001]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GoogleSatellite_0');
+        map.getPane('pane_GoogleSatellite_0').style.zIndex = 400;
+        var layer_GoogleSatellite_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleSatellite_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Map data ©2015 Google</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_GoogleSatellite_0;
+        map.addLayer(layer_GoogleSatellite_0);
+        map.createPane('pane_OSMStandard_1');
+        map.getPane('pane_OSMStandard_1').style.zIndex = 401;
+        var layer_OSMStandard_1 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMStandard_1',
+            opacity: 0.64,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OSMStandard_1;
+        map.addLayer(layer_OSMStandard_1);
+        function pop_Limites_Bairros_2015_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Bairro</th>\
+                        <td>' + (feature.properties['Bairro'] !== null ? autolinker.link(feature.properties['Bairro'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ID</th>\
+                        <td>' + (feature.properties['ID'] !== null ? autolinker.link(feature.properties['ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Limites_Bairros_2015_2_0() {
+            return {
+                pane: 'pane_Limites_Bairros_2015_2',
+                opacity: 1,
+                color: 'rgba(255,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Limites_Bairros_2015_2');
+        map.getPane('pane_Limites_Bairros_2015_2').style.zIndex = 402;
+        map.getPane('pane_Limites_Bairros_2015_2').style['mix-blend-mode'] = 'normal';
+        var layer_Limites_Bairros_2015_2 = new L.geoJson(json_Limites_Bairros_2015_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Limites_Bairros_2015_2',
+            layerName: 'layer_Limites_Bairros_2015_2',
+            pane: 'pane_Limites_Bairros_2015_2',
+            onEachFeature: pop_Limites_Bairros_2015_2,
+            style: style_Limites_Bairros_2015_2_0,
+        });
+        bounds_group.addLayer(layer_Limites_Bairros_2015_2);
+        map.addLayer(layer_Limites_Bairros_2015_2);
+        function pop_Pontos_IA_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">ID</th>\
+                        <td>' + (feature.properties['ID'] !== null ? autolinker.link(feature.properties['ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Tipo1</th>\
+                        <td>' + (feature.properties['Tipo1'] !== null ? autolinker.link(feature.properties['Tipo1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Tipo2</th>\
+                        <td>' + (feature.properties['Tipo2'] !== null ? autolinker.link(feature.properties['Tipo2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Tipo3</th>\
+                        <td>' + (feature.properties['Tipo3'] !== null ? autolinker.link(feature.properties['Tipo3'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Latitude</th>\
+                        <td>' + (feature.properties['Latitude'] !== null ? autolinker.link(feature.properties['Latitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Longitude</th>\
+                        <td>' + (feature.properties['Longitude'] !== null ? autolinker.link(feature.properties['Longitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Local</th>\
+                        <td>' + (feature.properties['Local'] !== null ? autolinker.link(feature.properties['Local'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Foto</th>\
+                        <td>' + (feature.properties['Foto'] !== null ? '<img src="images/' + String(feature.properties['Foto']).replace(/[\\\/:]/g, '_').trim() + '">' : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Pontos_IA_3_0() {
+            return {
+                pane: 'pane_Pontos_IA_3',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/pata_azul.svg',
+            iconSize: [30.4, 30.4]
+        }),
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Pontos_IA_3');
+        map.getPane('pane_Pontos_IA_3').style.zIndex = 403;
+        map.getPane('pane_Pontos_IA_3').style['mix-blend-mode'] = 'normal';
+        var layer_Pontos_IA_3 = new L.geoJson(json_Pontos_IA_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Pontos_IA_3',
+            layerName: 'layer_Pontos_IA_3',
+            pane: 'pane_Pontos_IA_3',
+            onEachFeature: pop_Pontos_IA_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_Pontos_IA_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Pontos_IA_3);
+        map.addLayer(layer_Pontos_IA_3);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/Pontos_IA_3.png" /> Pontos_IA': layer_Pontos_IA_3,'<img src="legend/Limites_Bairros_2015_2.png" /> Limites_Bairros_2015': layer_Limites_Bairros_2015_2,"OSM Standard": layer_OSMStandard_1,"Google Satellite": layer_GoogleSatellite_0,}).addTo(map);
+        setBounds();
+        resetLabels([layer_Limites_Bairros_2015_2]);
+        map.on("zoomend", function(){
+            resetLabels([layer_Limites_Bairros_2015_2]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_Limites_Bairros_2015_2]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_Limites_Bairros_2015_2]);
+        });
+        </script>
+    </body>
+</html>
